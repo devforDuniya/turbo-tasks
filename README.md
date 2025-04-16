@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 TurboTasks
 
-## Getting Started
+TurboTasks is a **fully interactive Kanban board** built with **Next.js**, **TypeScript**, and **Tailwind CSS**. It supports drag-and-drop columns, persistent state (via `localStorage`), modal editing for task cards, and real-time list and card manipulation — all in a clean, responsive UI.
 
-First, run the development server:
+---
 
+## 🔥 Features
+
+- 📦 Drag-and-drop **columns** with live reordering  
+- 📝 **Cards** with titles, descriptions, and column assignments  
+- 🧩 Modal for **editing cards**  
+- 🗂️ Add/delete entire **lists (columns)**  
+- 🧹 One-click **clear all data** (columns + cards)  
+- 💾 Persistent state using `localStorage`  
+- ⚡ Fast and responsive UI built with Tailwind CSS  
+- ✅ Type-safe with TypeScript  
+
+---
+
+## 📦 Tech Stack
+
+- **Next.js** (v14+)  
+- **React** (v18+)  
+- **TypeScript**  
+- **Tailwind CSS**  
+- **Framer Motion** (animations)  
+- **Heroicons**  
+
+---
+
+## 🛠️ Getting Started
+
+### 1. **Clone the repository**  
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/TurboTasks.git
+cd TurboTasks
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. **Install dependencies**  
+```bash
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. **Start the dev server**  
+```bash
+npm run dev
+```
 
-## Learn More
+Visit [http://localhost:3000](http://localhost:3000) to view the Kanban board.  
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 💾 `localStorage` Keys  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `cards` → Stores all card data  
+- `columns` → Stores all column/list metadata  
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚧 Future Enhancements  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 🔐 User authentication  
+- 🔄 Database sync (e.g., Supabase/Firebase)  
+- 📆 Due dates and reminders  
+- 🏷️ Tagging system  
+```
