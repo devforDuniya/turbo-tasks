@@ -11,10 +11,10 @@ export const DEFAULT_CARDS: Card[] = [
     {
         title: "Research DB options for new microservice",
         id: "5",
-        column: "fontend",
+        column: "frontend",
     },
-    { title: "Postmortem for outage", id: "6", column: "fontend" },
-    { title: "Sync with product on Q3 roadmap", id: "7", column: "fontend" },
+    { title: "Postmortem for outage", id: "6", column: "frontend" },
+    { title: "Sync with product on Q3 roadmap", id: "7", column: "frontend" },
 
     // DOING
     {
@@ -44,7 +44,7 @@ export const DEFAULT_COLUMNS = (
         },
         {
             title: "Frontend",
-            column: "fontend",
+            column: "frontend",
             headingColor: "text-yellow-200",
             cards: cards,
             setCards: setCards
