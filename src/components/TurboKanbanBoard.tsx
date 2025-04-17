@@ -2,12 +2,19 @@
 import { useEffect, useState } from "react";
 import { Card } from "../types/card";
 import { DEFAULT_CARDS, DEFAULT_COLUMNS } from "../data/data";
-import InteractiveColumn from "./InteractiveCard";
+import InteractiveColumn from "./InteractiveColumn";
+
 import AddList from "./AddList";
 import ColumnDropIndicator from "./ColumnDropIndicator";
 import CardModal from "./CarModal";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import React from "react";
+
+interface ColumnType {
+  title: string;
+  column: string; // Ensure this is string to match InteractiveCard
+  headingColor: string;
+}
 
 export const TurboKanbanBoard = () => {
   return (
@@ -18,17 +25,15 @@ export const TurboKanbanBoard = () => {
 };
 
 const Board = () => {
-  // Initialize with default data
   const [cards, setCards] = useState<Card[]>(DEFAULT_CARDS);
-  const [columns, setColumns] = useState(
+  const [columns, setColumns] = useState<ColumnType[]>(
     DEFAULT_COLUMNS(DEFAULT_CARDS, setCards)
   );
   const [activeColumn, setActiveColumn] = useState<boolean>(false);
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
   const [initialized, setInitialized] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true); // Add loading state
+  const [loading, setLoading] = useState<boolean>(true);
 
-  // Function to handle column drag and drop
   const handleColumnDragStart = (
     e: React.DragEvent<HTMLDivElement>,
     columnId: string
@@ -125,12 +130,10 @@ const Board = () => {
   };
 
   const handleCardClick = (card: Card) => {
-    // Find the complete card data
     const completeCard = cards.find((c) => c.id === card.id);
     setSelectedCard(completeCard || null);
   };
 
-  // Update card details
   const handleCardSave = (updatedCard: Card) => {
     setCards((prevCards) =>
       prevCards.map((c) => (c.id === updatedCard.id ? updatedCard : c))
@@ -141,19 +144,13 @@ const Board = () => {
     setCards((prevCards) => prevCards.filter((c) => c.id !== cardId));
   };
 
-  // New function to delete a specific list
   const handleDeleteList = (columnId: string) => {
     setColumns(columns.filter((col) => col.column !== columnId));
-
-    // Optionally, also remove all cards that were in that column
     setCards(cards.filter((card) => card.column !== columnId));
   };
 
-  // New function to delete all lists and cards
   const handleDeleteAll = () => {
-    if (
-      window.confirm("Are you sure you want to delete all lists and cards?")
-    ) {
+    if (window.confirm("Are you sure you want to delete all lists and cards?")) {
       setColumns([]);
       setCards([]);
       localStorage.removeItem("cards");
@@ -161,28 +158,19 @@ const Board = () => {
     }
   };
 
-  // Initialize the state from localStorage or with defaults
   useEffect(() => {
     if (typeof window !== "undefined") {
       const savedCards = localStorage.getItem("cards");
       const savedColumns = localStorage.getItem("columns");
 
-      if (savedCards) {
-        setCards(JSON.parse(savedCards));
-      }
+      if (savedCards) setCards(JSON.parse(savedCards));
+      if (savedColumns) setColumns(JSON.parse(savedColumns));
 
-      if (savedColumns) {
-        setColumns(JSON.parse(savedColumns));
-      }
-
-      // Mark as initialized after we've checked localStorage
       setInitialized(true);
-      setLoading(false); // Data has been loaded, set loading to false
+      setLoading(false);
     }
   }, []);
 
-  // Save changes to localStorage whenever cards or columns change
-  // But only after the initial load from localStorage
   useEffect(() => {
     if (typeof window !== "undefined" && initialized) {
       localStorage.setItem("cards", JSON.stringify(cards));
@@ -190,11 +178,10 @@ const Board = () => {
     }
   }, [cards, columns, initialized]);
 
-  // If loading is true, show a loading indicator or the default data
   if (loading) {
     return (
       <div className="h-screen w-full flex justify-center items-center">
-        <div>Loading...</div> {/* Show a loading indicator */}
+        <div>Loading...</div>
       </div>
     );
   }
@@ -218,22 +205,21 @@ const Board = () => {
         onDragLeave={handleColumnDragLeave}
         onDrop={handleColumnDragEnd}
       >
-      {columns.map((column, index) => (
-  <React.Fragment key={column.column}>
-    <ColumnDropIndicator beforeId={column.column} />
-    <InteractiveColumn
-      key={index}
-      title={column.title}
-      column={column.column}
-      headingColor={column.headingColor} 
-      cards={cards}
-      setCards={setCards}
-      handleColumnDragStart={handleColumnDragStart}
-      onCardClick={handleCardClick}
-      onDeleteList={handleDeleteList} 
-    />
-  </React.Fragment>
-))}
+        {columns.map((column) => (
+          <React.Fragment key={column.column}>
+            <ColumnDropIndicator beforeId={column.column} />
+            <InteractiveColumn
+              title={column.title}
+              column={column.column}  // Now passing string which matches the prop type
+              headingColor={column.headingColor}
+              cards={cards}
+              setCards={setCards}
+              handleColumnDragStart={handleColumnDragStart}
+              onCardClick={handleCardClick}
+              onDeleteList={handleDeleteList}
+            />
+          </React.Fragment>
+        ))}
         <ColumnDropIndicator beforeId={null} />
         <AddList setColumns={setColumns} />
         {selectedCard && (

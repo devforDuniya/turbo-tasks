@@ -15,14 +15,16 @@ const InteractiveCard = ({
   dueDate,
   handleDragStart,
   onCardClick,
+  headingColor,
 }: {
   title: string;
   id: string;
-  column: number;
+  column: string;
   description?: string;
   dueDate?: string;
   handleDragStart: any;
   onCardClick?: any;
+  headingColor?: string;
 }) => {
   return (
     <>

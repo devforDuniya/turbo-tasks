@@ -5,25 +5,27 @@ import InteractiveCard from "./InteractiveCard";
 import AddCard from "./AddCard";
 import { TrashIcon } from "@heroicons/react/24/outline"; // Ensure this package is installed
 
+interface InteractiveColumnProps {
+  title: string;
+  cards: Card[];
+  setCards: React.Dispatch<React.SetStateAction<Card[]>>;
+  column: string;
+  headingColor: string;
+  handleColumnDragStart: (e: React.DragEvent<HTMLDivElement>, column: string) => void;
+  onCardClick: (card: Card) => void;
+  onDeleteList: (column: string) => void;
+}
+
 const InteractiveColumn = ({
-    title,
-    headingColor,
-    cards,
-    column,
-    setCards,
-    handleColumnDragStart,
-    onCardClick,
-    onDeleteList,
-  }: {
-    title: string;
-    cards: Card[];
-    setCards: React.Dispatch<React.SetStateAction<Card[]>>;
-    column: string;
-    headingColor: string;
-    handleColumnDragStart: (e: React.DragEvent<HTMLDivElement>, column: string) => void;
-    onCardClick: (card: Card) => void;
-    onDeleteList: (column: string) => void;
-  }) => {
+  title,
+  headingColor,
+  cards,
+  column,
+  setCards,
+  handleColumnDragStart,
+  onCardClick,
+  onDeleteList,
+}: InteractiveColumnProps) => {
     const [active, setActive] = useState(false);
   
     // Move the getIndicators function to the top
@@ -148,13 +150,17 @@ const InteractiveColumn = ({
           }`}
         >
          {filteredCards.map((card) => (
-  <InteractiveCard
-    key={card.id}
-    {...card}
-    column={parseInt(card.column, 10)} 
-    handleDragStart={handleDragStart}
-    onCardClick={onCardClick}
-  />
+         <InteractiveCard
+         key={card.id}
+         title={card.title}
+         id={card.id}
+         column={card.column}
+         description={card.description}
+         dueDate={card.dueDate}
+         handleDragStart={handleDragStart}
+         onCardClick={onCardClick}
+         headingColor={headingColor} // Only if you need this in the card
+       />
 ))}
           <DropIndicator beforeId={null} column={column} />
           <AddCard column={column} setCards={setCards} />
